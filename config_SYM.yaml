@@ -1,0 +1,23 @@
+local_data_dir : /home/ralf/CQT_internship/communication/sftp_test_files/
+
+server_ip : 192.168.56.103
+
+srv_ssh_exec : /usr/local/openssh/sbin/sshd
+        
+srv_config_file : /usr/local/openssh/sshd_config
+        
+local_client_upload_dir : /var/sftp/uploads/
+
+local_srv_upload_dir : /var/sftp/
+
+time_to_live : 60
+  
+client_ssh_exec : /usr/local/openssh/bin/ssh
+        
+client_config_file : /usr/local/openssh/ssh_config
+        
+remote_client_upload_dir : /uploads/
+        
+remote_srv_upload_dir : /
+
+username : bob_ftp

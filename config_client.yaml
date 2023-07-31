@@ -1,0 +1,13 @@
+server_ip : 192.168.56.103
+
+ssh_exec : /usr/bin/sftp
+
+config_file : /etc/ssh/ssh_config
+
+client_upload_dir : /uploads
+
+srv_upload_dir : /
+
+local_data_dir : /home/ralf/CQT_internship/communication/sftp_test_files/
+
+username : alice

@@ -1,0 +1,76 @@
+"""Guide fait avec un Ubuntu 20"""
+
+Utilisation des sites web suivant : 
+    -> https://github.com/open-quantum-safe/libssh#build-instructions-for-oqs-openssh 
+        pour les instruction d'installation de liboqs et oqs-openssh 
+
+    -> https://github.com/open-quantum-safe/openssh
+        Pour les TEST une fois l'installation terminé
+
+    -> https://www.digitalocean.com/community/tutorials/how-to-enable-sftp-without-shell-access-on-ubuntu-20-04 
+        pour la mise en place d'un folder sécurisé pour le client
+        sur un système linux
+
+##################################################################################################
+######################################Installation OQS-OpenSSH####################################
+##################################################################################################
+
+
+
+Prérequis :
+    *Update and upgrade everythings : sudo apt update -y && sudo apt upgrade -y
+    *Installer git : sudo apt install git 
+    *Installer aussi OpenSSL pour les chiffrements symétrique
+    *Installer la version "classic" de openssh : server et client pour les echange de clefs
+        sudo apt-get install openssh-server
+        (C.F https://www.cyberciti.biz/faq/ubuntu-linux-install-openssh-server/)
+
+In /usr/local/src : install liboqs with     
+    cd /usr/local/src
+    git clone --branch main --single-branch --depth 1 https://github.com/open-quantum-safe/liboqs.git
+
+Install the following needed package : 
+    sudo apt install astyle cmake gcc ninja-build libssl-dev python3-pytest python3-pytest-xdist unzip xsltproc doxygen graphviz python3-yaml valgrind
+    sudo apt install cmake gcc g++ ninja-build libssl-dev python3-pytest python3-pytest-xdist unzip xsltproc doxygen graphviz
+    sudo apt install autoconf automake cmake gcc libtool libssl-dev make ninja-build zlib1g-dev
+
+
+Install liboqs library : in ${OQS_ROOT_DIR} = /usr/local/oqs-lib
+    sudo mkdir build && cd build
+    sudo cmake -GNinja -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_INSTALL_PREFIX=${OQS_ROOT_DIR} ..
+    sudo ninja
+    sudo ninja install
+
+Install openssh source code in : /usr/local/src : 
+    cd /usr/local/src 
+    sudo git clone --branch OQS-v8 --single-branch --depth 1 https://github.com/open-quantum-safe/openssh.git
+
+With ${OPENSSH_INSTALL} = /usr/local/openssh
+    cd /usr/local/src/openssh
+    sudo autoreconf
+    sudo ./configure --with-libs=-lm --prefix=${OPENSSH_INSTALL} --sysconfdir=${OPENSSH_INSTALL} --with-liboqs-dir=${OQS_ROOT_DIR}
+    sudo make -j
+    sudo make install
+
+Update the path for accessing oqs-openssh instead of the classic openssh : 
+    do that in ~/.bashrc
+    PATH=${OPENSSH_INSTALL}/bin:$PATH
+
+
+##################################################################################################
+################User and file directroy partionnement for sftp####################################
+##################################################################################################
+
+Then you can create a directory for the client using this website :  https://www.digitalocean.com/community/tutorials/how-to-enable-sftp-without-shell-access-on-ubuntu-20-04 
+
+##################################################################################################
+###########################Python module installation : ##########################################
+##################################################################################################
+
+When installing a python module (ex : watchdog) use "SUDO pip3 install <module>"
+Really important to use SUDO here, otherwise the package will not be found when we will want to execute our script with sudo privilege (because super
+user don't have the same environement than a normal user....)
+
+
++ EXECUTE OUR SCRIPTS WITH "SUDO" PRIVILEGE
+
