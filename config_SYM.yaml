@@ -10,8 +10,6 @@ local_client_upload_dir : /var/sftp/uploads/
 
 local_srv_upload_dir : /var/sftp/
 
-time_to_live : 60
-  
 client_ssh_exec : /usr/local/openssh/bin/ssh
         
 client_config_file : /usr/local/openssh/ssh_config

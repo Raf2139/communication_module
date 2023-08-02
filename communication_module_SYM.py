@@ -36,7 +36,6 @@ class CommunicationModule:
         self.local_client_upload_dir = config["local_client_upload_dir"]
         self.local_srv_upload_dir = config["local_srv_upload_dir"]
         self.srv_on = False
-        self.time_to_live = config["time_to_live"]
 
         """attributes relative to CLIENT part"""
         self.client_ssh_exec = config[
@@ -62,7 +61,6 @@ class CommunicationModule:
             f"local_client_upload_dir : {self.local_client_upload_dir}\n"
             f"local_srv_upload_dir : {self.local_srv_upload_dir}\n"
             f"srv_on : {self.srv_on}\n"
-            f"time_to_live : {self.time_to_live}\n"
             "\n\tClient : \n"
             f"client_ssh_exec : {self.client_ssh_exec}\n"
             f"client_config_file : {self.client_config_file}\n"
@@ -87,12 +85,13 @@ class CommunicationModule:
             recursive=True,
         )
         my_observer.start()
-        living_time = 0
-        while living_time < self.time_to_live:
-            time.sleep(1)
-            living_time += 1
-        my_observer.stop()
-        my_observer.join()
+        try:
+            while True:
+                # Set the thread sleep time
+                time.sleep(1)
+        except KeyboardInterrupt:
+            my_observer.stop()
+            my_observer.join()
 
     def stop_server(self):
         print("We stoped the oqs-ssh server")

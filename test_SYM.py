@@ -11,6 +11,8 @@ A small test file use for testing the different class and function written in co
 """
 
 import communication_module_SYM as com
+import threading
+import time
 
 file_to_send = "hugeRandom_file.txt"
 file_to_get = "nouveau_fichier_test.txt"
@@ -63,6 +65,19 @@ def TEST_authorized_file_access():
     aOrb.authorized_file_access(file_to_set_public)
     print("END of the test of authorized_file_access")
     
+def TEST_client_and_server(): 
+    print("\n\tTEST client_and_server is started : \n")
+    aOrb = com.CommunicationModule()
+    server_thread = threading.Thread(target=aOrb.start_server, daemon=True)
+    
+    server_thread.start()
+    print("Server started in BG")
+    time.sleep(10)
+    print("Send the file : ")
+    aOrb.send_file(file_to_send)
+    time.sleep(10)
+    print("END of the test of client_and_server")
+    
 
-
+    
 TEST_start_server()
