@@ -91,7 +91,7 @@ class CommunicationModule:
                 time.sleep(1)
         except KeyboardInterrupt:
             my_observer.stop()
-            my_observer.join()
+        my_observer.join()
 
     def stop_server(self):
         print("We stoped the oqs-ssh server")
