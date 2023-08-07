@@ -51,13 +51,13 @@
 HostKeyAlgorithms=ssh-ecdsa-nistp384-dilithium3
 PubkeyAcceptedKeyTypes=ssh-ecdsa-nistp384-dilithium3
 Ciphers aes128-cbc
-IdentityFile /home/aliceftp/.ssh/id_ecdsa_nistp384_dilithium3
+IdentityFile /home/ralf/.ssh/id_ecdsa_nistp384_dilithium3
 
 Host sftpbob
-	Hostname 192.168.56.103
+	Hostname 192.168.202.110
 	Port 22
-	User alice
-	IdentityFile /home/aliceftp/.ssh/id-ecdsa-nistp384-dilithium3
+	User bob_remote
+	IdentityFile /home/ralf/.ssh/id-ecdsa-nistp384-dilithium3
 	HostKeyAlgorithms=ssh-ecdsa-nistp384-dilithium3
 	PubkeyAcceptedKeyTypes=ssh-ecdsa-nistp384-dilithium3
 	Ciphers aes128-cbc

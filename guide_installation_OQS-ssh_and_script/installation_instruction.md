@@ -93,11 +93,12 @@ sudo make -j
 sudo make install
 ```
 
-3.Update the path to access OQS-OpenSSH instead of the classic OpenSSH. Add the following line to ~/.bashrc:
+3.[OPTIONAL] Update the path to access OQS-OpenSSH instead of the classic OpenSSH. Add the following line to ~/.bashrc:
 
 ```bash
 PATH=/usr/local/openssh/bin:$PATH
 ```
+
 
 # User and File Directory Partitioning for SFTP:
 
@@ -112,3 +113,22 @@ Remember to execute your scripts with "sudo" privilege to access all required mo
 
 Following these steps will help you install and configure OQS-OpenSSH on your Ubuntu 20 system.
 
+
+# Create a public key ecdsa dilithium :
+
+```bash
+ ssh-keygen -t ssh-ecdsa-nistp384-dilithium3
+```
+
+# Using a classic ssh connexion to copy the clef on the other on 
+
+```bash
+ssh-copy-id -i ~/.ssh/id_ecdsa_nistp384_dilithium3  bob_remote@192.168.202.110 
+```
+
+# Replace ssh_config and sshd_config de /usr/local/openssh par ceux du module de communication
+
+
+# Prendre la nouvelle clef du serveur
+
+./ssh-keygen -R 192.168.202.110
