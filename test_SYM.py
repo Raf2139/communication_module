@@ -14,10 +14,10 @@ import communication_module_SYM as com
 import threading
 import time
 
-file_to_send = "hugeRandom_file.txt"
+file_to_send = "bigRandom_file1.txt"
 file_to_get = "nouveau_fichier_test.txt"
 file_to_set_public = "nouveau_fichier_test.txt"
-
+mult_files_to_send=["bigRandom_file1.txt","bigRandom_file3.txt","bigRandom_file5.txt"]
 
 def TEST_initialisation():
     """
@@ -40,6 +40,15 @@ def TEST_send_file():
     print("\n\tsend of the file test : \n")
     aOrb.send_file(file_to_send)
     print("END of the test of send_file")
+
+def TEST_send_mult_files():
+    """
+    testing CommicationModuleClient
+    """
+    print("\n\tTEST send_mult_files is started : \n")
+    aOrb = com.CommunicationModule()
+    aOrb.send_mult_files(mult_files_to_send)
+    print("END of the test of send_mult_files")
 
 
 def TEST_get_file():
@@ -77,7 +86,7 @@ def TEST_client_and_server():
     aOrb.send_file(file_to_send)
     time.sleep(10)
     print("END of the test of client_and_server")
-    
+    server_thread.join()
 
-    
-TEST_start_server()
+
+TEST_send_mult_files()
