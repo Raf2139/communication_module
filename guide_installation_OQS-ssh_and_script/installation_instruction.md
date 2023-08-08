@@ -102,8 +102,47 @@ PATH=/usr/local/openssh/bin:$PATH
 
 # User and File Directory Partitioning for SFTP:
 
-Next, you can create a directory for the SFTP client following the instructions provided in this link:
+Next, you can create a directory for the SFTP client. The instructions were found in the following website:
 https://www.digitalocean.com/community/tutorials/how-to-enable-sftp-without-shell-access-on-ubuntu-20-04
+
+1.creat a new user, this user gonna be the account of the other participant of the protocol when he gonna want to connect on our server 
+This user is going to be named according to you choice (we gonna refer to his name as <remote_qs_sftp_user>)
+
+```bash
+sudo adduser <remote_qs_sftp_user>
+```
+
+2.Create a folder for this user where his gonna be restricted to:
+
+```bash
+sudo mkdir -p /var/sftp/<remote_qs_sftp_user>_folder/uploads
+```
+
+3.Give the proper right and acces to this folder (a remote 
+account will be able to read and upload file in /var/sftp/<remote_qs_sftp_user>_folder/uploads but he can only read files in the directory /var/sftp/<remote_qs_sftp_user>_folder/. The second directory will be use by the server itself for uploading file for the client)
+
+```bash
+sudo chown root:root /var/sftp/<remote_qs_sftp_user>_folder 
+
+sudo chmod 755 /var/sftp/<remote_qs_sftp_user>_folder 
+
+sudo chown <remote_qs_sftp_user>:<remote_qs_sftp_user> /var/sftp/<remote_qs_sftp_user>_folder/uploads 
+```
+
+4.Modified the file /usr/local/openssh/sshd_config accoring to the choice made, i.e at the end of the file rewrite as follow the last line : 
+
+```bash
+Match User <<remote_qs_sftp_user>
+	PubkeyAuthentication yes
+	ForceCommand internal-sftp
+	PasswordAuthentication no
+	ChrootDirectory /var/sftp/<remote_qs_sftp_user>_folder/
+	PermitTunnel no
+	AllowAgentForwarding yes
+	AllowTcpForwarding no
+	X11Forwarding no
+```
+
 
 # Python Module Installation:
 
