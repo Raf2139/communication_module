@@ -129,10 +129,12 @@ sudo chmod 755 /var/sftp/<remote_qs_sftp_user>_folder
 sudo chown <remote_qs_sftp_user>:<remote_qs_sftp_user> /var/sftp/<remote_qs_sftp_user>_folder/uploads 
 ```
 
-4.Modified the file /usr/local/openssh/sshd_config accoring to the choice made, i.e at the end of the file rewrite as follow the last line : 
+4.Modified the file /usr/local/openssh/sshd_config and /usr/local/openssh/ssh_config accoring to the choice made, i.e at the end of the file rewrite as follow the last line : 
+
+In sshd_config, replace <remote_qs_sftp_user>
 
 ```bash
-Match User <<remote_qs_sftp_user>
+Match User <remote_qs_sftp_user>
 	PubkeyAuthentication yes
 	ForceCommand internal-sftp
 	PasswordAuthentication no
@@ -142,6 +144,15 @@ Match User <<remote_qs_sftp_user>
 	AllowTcpForwarding no
 	X11Forwarding no
 ```
+
+In ssh_config, replace 
+
+```bash
+IdentityFile /home/<local_user_name>/.ssh/id_ecdsa_nistp384_dilithium3
+```
+ by the proper path to your key
+
+
 
 
 # Python Module Installation:
@@ -164,6 +175,14 @@ Following these steps will help you install and configure OQS-OpenSSH on your Ub
 ```bash
 ssh-copy-id -i ~/.ssh/id_ecdsa_nistp384_dilithium3  bob_remote@192.168.202.110 
 ```
+
+IMPORTANT : do not forgot to disable and close the classic ssh server after that!!
+```bash
+sudo sytemctl disbale ssh
+
+sudo sytemctl stop ssh
+```
+
 
 # Replace ssh_config and sshd_config de /usr/local/openssh par ceux du module de communication
 
