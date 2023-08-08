@@ -51,7 +51,7 @@
 HostKeyAlgorithms=ssh-ecdsa-nistp384-dilithium3
 PubkeyAcceptedKeyTypes=ssh-ecdsa-nistp384-dilithium3
 Ciphers aes128-cbc
-IdentityFile /home/ralf/.ssh/id_ecdsa_nistp384_dilithium3
+IdentityFile /home/<local_user_name>/.ssh/id_ecdsa_nistp384_dilithium3
 
 Host sftpbob
 	Hostname 192.168.202.110

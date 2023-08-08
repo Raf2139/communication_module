@@ -41,7 +41,7 @@ HostKey /usr/local/openssh/ssh_host_ecdsa_nistp384_dilithium3_key
 #MaxSessions 10
 
 #PubkeyAuthentication yes
-PubkeyAuthentication yes
+PubkeyAuthentication no
 
 # The default is to check both .ssh/authorized_keys and .ssh/authorized_keys2
 # but this is overridden so installations will only check .ssh/authorized_keys
@@ -159,10 +159,11 @@ MACs hmac-sha2-512
 
 Ciphers aes128-cbc
 
-Match User alice
+Match User <remote_qs_sftp_user>
+	PubkeyAuthentication yes
 	ForceCommand internal-sftp
 	PasswordAuthentication no
-	ChrootDirectory /var/sftp
+	ChrootDirectory /var/sftp/<remots_qs_sftp_user>_folder
 	PermitTunnel no
 	AllowAgentForwarding yes
 	AllowTcpForwarding no
